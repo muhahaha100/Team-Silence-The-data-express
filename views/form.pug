@@ -1,13 +1,20 @@
 extends layout
 block content
-    form(class="form" method='post' action="/submitted")
+    h1=title
+    form(id="form" method='post' action="/newUser")
         p Username:&nbsp;&nbsp;
             input(type='text' name='username' required)
         p Password:&nbsp;&nbsp;
-            input(type='password' name='password' required)
-        p Email:&nbsp;&nbsp;
+            input(type='text' name='password' required)
+        p E-Mail:&nbsp;&nbsp;
             input(type='text' name='email' required)
         p Age:&nbsp;&nbsp;
-            input(type='text' name='age' required)
+            input(type='number' name='age' required)
+        p What shape is the earth to you?:&nbsp;&nbsp;
+            input(type="text" name="question1" required)
+        p How much is 1+1 to you?:&nbsp;&nbsp;
+            input(type='text' name='question2' required)
+        p How much wood CAN a wood chuck chuck?:&nbsp;&nbsp;
+            input(type='text' name='question3' required)
         p
-            input(type='submit' value='Save')
+            input(type='submit' value='Create user!')
