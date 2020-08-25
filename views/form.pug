@@ -1,0 +1,14 @@
+extends layout
+block content
+    h1=title
+    form(id="form" method='post' action="/submitted")
+        p Name:&nbsp;&nbsp;
+            input(type='text' name='name' required)
+        p Address:&nbsp;&nbsp;
+            input(type='text' name='address' required)
+        p Phone Number:&nbsp;&nbsp;
+            input(type='text' name='phone' required)
+        p Email:&nbsp;&nbsp;
+            input(type='text' name='email' required)
+        p
+            input(type='submit' value='Send it')
