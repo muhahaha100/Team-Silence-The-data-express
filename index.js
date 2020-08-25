@@ -10,5 +10,6 @@ app.set("views", __dirname + "/views");
 app.use(express.static(path.join(__dirname + "/public")));
 
 app.get("/", routes.index);
+app.get("/form", routes.form);
 
 app.listen(3000);

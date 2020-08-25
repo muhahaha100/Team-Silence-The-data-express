@@ -2,3 +2,11 @@ html{
     background: #500;
     color: #fff;
 }
+
+#form{
+    width: 350px;
+    padding: 10px 30px;
+    border: 5px solid #faa;
+    border-radius: 15px;
+    background: #b55;
+}
