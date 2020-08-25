@@ -1,6 +1,6 @@
 extends layout
 block content
-    form(id="form" method='post' action="/submitted")
+    form(class="form" method='post' action="/submitted")
         p Username:&nbsp;&nbsp;
             input(type='text' name='username' required)
         p Password:&nbsp;&nbsp;
@@ -10,4 +10,4 @@ block content
         p Age:&nbsp;&nbsp;
             input(type='text' name='age' required)
         p
-            input(type='submit' value='Send it')
+            input(type='submit' value='Save')
