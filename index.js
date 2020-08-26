@@ -34,6 +34,8 @@ app.use(expressSession({
 }));
 
 app.get("/", routes.index);
+app.post("/profileFinishedEditting", checkAuth, urlencodedParser, routes.finishedEditing)
+app.post("/editProfile", checkAuth, urlencodedParser, routes.editProfile);
 app.get("/private",checkAuth, routes.private);
 app.get("/login", routes.login);
 app.post("/login",urlencodedParser, routes.loginActually);

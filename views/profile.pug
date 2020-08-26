@@ -1,7 +1,21 @@
 extends layout
 block content
-    h1 #{username}
+    h1=title
     div(class="formDiv")
-        form(class="form" method='post' action="/submitted")
+        form(class="form" method='post' action="/profileFinishedEditting")
+            p Username:&nbsp;&nbsp;
+                input(type='text' name='username' required)
+            p Password:&nbsp;&nbsp;
+                input(type='text' name='password' required)
+            p E-Mail:&nbsp;&nbsp;
+                input(type='text' name='email' required)
+            p Age:&nbsp;&nbsp;
+                input(type='number' name='age' required)
+            p What shape is the earth to you?:<br>
+                input(type="text" name="question1" required)
+            p How much is 1+1 to you?:<br>
+                input(type='text' name='question2' required)
+            p How much wood CAN a wood chuck chuck?:<br>
+                input(type='text' name='question3' required)
             p
-                input(type='submit' value='Edit')
+                input(type='submit' value='Edit Profile!')

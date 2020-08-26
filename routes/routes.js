@@ -1,15 +1,6 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
-//const bcrypt = require("bcryptjs");
-
-//let salt = bcrypt.genSaltSync(10);
-//let hash = bcrypt.hashSync("bacon", salt);
-
-//console.log(salt);
-//console.log(hash);
-
-//console.log(bcrypt.compareSync("bacon", hash));
-//console.log(bcrypt.compareSync("veggies", hash));
 
 const { decodeBase64 } = require("bcryptjs");
 const cookieParser = require("cookie-parser");
@@ -24,7 +15,7 @@ mongoose.connect("mongodb+srv://user:admin@cluster0.4y4y6.mongodb.net/Cluster0?r
 let mdb = mongoose.connection;
 mdb.on("error", console.error.bind(console, "connection error"));
 mdb.once("open", callback =>{
-
+    
 });
 
 let userSchema = mongoose.Schema({
@@ -53,31 +44,81 @@ exports.index = (req, res) => {
 
 exports.newUser = (req, res) =>{
     res.render("form", {
-
+        
     });
 };
 
+
+//let salt = bcrypt.genSaltSync(10);
+//let hash = bcrypt.hashSync("bacon", salt);
+
+//console.log(salt);
+//console.log(hash);
+
+//console.log(bcrypt.compareSync("bacon", hash));
+//console.log(bcrypt.compareSync("veggies", hash));
+let salt = bcrypt.genSaltSync(10);
+
 exports.newUserMade = (req, res) => {
+    let hash = bcrypt.hashSync(req.body.password, salt);
     let user = new User({
         username: req.body.username,
-        password: req.body.password,
+        password: hash,
         email: req.body.email,
         age: req.body.age,
         question1: req.body.question1,
         question2: req.body.question2,
         question3: req.body.question3
     });
-};
-
-exports.form = (req, res) => {
-    res.render("form", {
-        "title": "Form"
-    });
     user.save((err, user) => {
         if (err) return console.error(err);
-        console.log(req.body.username + " added!");
+        console.log(req.body.username + " Added");
+        req.session.user = {
+            isAuthenticated: true,
+            username: req.body.username
+        };
+        res.redirect("/private");
     });
-    res.redirect("/");
+};
+
+exports.editProfile = (req,res) => {
+    res.render("profile", {
+        title: req.session.user.username
+    });
+};
+
+exports.finishedEditing = (req, res) => {
+    let hash = bcrypt.hashSync(req.body.password, salt);
+    let id = "";
+    User.find((err, user) =>{
+        if (err) return console.error(err);
+        for(i=0; i<user.length; i++){
+            if (user[i]["username"] == req.session.user.username){
+                id = user[i]["_id"]
+                break;
+            }
+        }
+        User.findById(id, (err2, user2) =>{
+            if (err2) return console.error(err2);
+            user2.username = req.body.username;
+            user2.password = hash;
+            user2.email = req.body.email;
+            user2.age = req.body.age;
+            user2.question1 = req.body.question1;
+            user2.question2 = req.body.question2;
+            user2.question3 = req.body.question3;
+    
+            user2.save((err3, user3) => {
+                if (err3) return console.error(err3);
+                console.log("Updated!");
+            });
+            req.session.user = {
+                isAuthenticated: true,
+                username: req.body.username
+            };
+            res.redirect("/private");
+        });
+    });
 };
 
 exports.login = (req, res) => {
@@ -100,7 +141,7 @@ exports.private = (req, res) => {
     res.render("private", {
         secretUser: req.session.user.username
     });
-}
+};
 
 exports.loginActually = (req, res) => {
     console.log("OMG");
@@ -111,7 +152,7 @@ exports.loginActually = (req, res) => {
         console.log("um");
         for(i = 0; i < user.length; i++){
             if (user[i]["username"] == req.body.username){
-                if (user[i]["password"] == req.body.password){
+                if (bcrypt.compareSync(req.body.password, user[i]["password"])){
                     indexFound = i;
                     break;
                 }
@@ -155,8 +196,7 @@ exports.index = (req,res) => {
             res.cookie("beenHereBefore", today, {maxAge: 999999999999999});
         }
         res.render("index", {
-            users: user,
             lastTime: response
         });
-    })
+    });
 };
