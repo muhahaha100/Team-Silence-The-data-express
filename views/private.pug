@@ -1,0 +1,8 @@
+extends layout
+block content
+        p This is my PRIVATE :D homepage!
+        h1 Welcome #{secretUser}
+        p #{lastTime}
+        form(class="form" method='post' action="/logout")
+            p
+                input(type='submit' value='Log Out')
