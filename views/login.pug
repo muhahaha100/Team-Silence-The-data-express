@@ -1,0 +1,11 @@
+extends layout
+block content
+    h1=title
+    div(class="formDiv")
+        form(class="form" method='post' action="/newUser")
+            p Username:&nbsp;&nbsp;
+                input(type='text' name='username' required)
+            p Password:&nbsp;&nbsp;
+                input(type='text' name='password' required)
+            p
+                input(type='submit' value='Login')

@@ -3,9 +3,18 @@ html{
     color: #fff;
 }
 
+head{
+    height: 50px;
+}
+
+.formDiv{
+    display: block;
+    text-align: center;
+}
+
 .form{
-    
-    width: 350px;
+    display: inline-block;
+    width: 300px;
     padding: 10px 30px;
     border: 5px solid #faa;
     border-radius: 15px;
