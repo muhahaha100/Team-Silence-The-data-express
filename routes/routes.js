@@ -44,7 +44,7 @@ exports.index = (req, res) => {
 
 exports.newUser = (req, res) =>{
     res.render("form", {
-        
+        loggedIn: req.session.user
     });
 };
 
@@ -83,6 +83,7 @@ exports.newUserMade = (req, res) => {
 
 exports.editProfile = (req,res) => {
     res.render("profile", {
+        loggedIn: req.session.user,
         title: req.session.user.username
     });
 };
@@ -114,6 +115,7 @@ exports.finishedEditing = (req, res) => {
             });
             req.session.user = {
                 isAuthenticated: true,
+                id: id,
                 username: req.body.username
             };
             res.redirect("/private");
@@ -123,7 +125,7 @@ exports.finishedEditing = (req, res) => {
 
 exports.login = (req, res) => {
     res.render("login", {
-
+        loggedIn: req.session.user
     });
 };
 
@@ -138,8 +140,20 @@ exports.logout = (req, res) => {
 };
 
 exports.private = (req, res) => {
-    res.render("private", {
-        secretUser: req.session.user.username
+    User.findById(req.session.user.id,(err, user) => {
+        if (err) return console.error(err);
+
+        
+        res.render("private", {
+            loggedIn: req.session.user,
+            secretUser: req.session.user.username,
+            username: user.username,
+            email: user.email,
+            age: user.age,
+            question1: user.question1,
+            question2: user.question2,
+            question3: user.question3
+        });
     });
 };
 
@@ -162,11 +176,15 @@ exports.loginActually = (req, res) => {
         if (indexFound > -1){
             req.session.user = {
                 isAuthenticated: true,
+                id: user[indexFound]["_id"],
                 username: req.body.username
             }
+            console.log("question mark");
+            console.log(req.session.user);
+            console.log(req.session.user.id);
             res.redirect("/private");
         }else{
-            res.redirect("login");
+            res.redirect("/login");
             // no user with that username and password
         }
     });
@@ -196,6 +214,7 @@ exports.index = (req,res) => {
             res.cookie("beenHereBefore", today, {maxAge: 999999999999999});
         }
         res.render("index", {
+            loggedIn: req.session.user,
             lastTime: response
         });
     });
