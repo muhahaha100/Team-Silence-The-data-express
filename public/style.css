@@ -20,3 +20,17 @@ head{
     border-radius: 15px;
     background: #b55;
 }
+
+li{
+    list-style: none;
+}
+
+a{
+    color:white;
+    border: 3px solid #faa;
+    margin: 5px;
+}
+
+a:hover{
+    color: yellow;
+}
