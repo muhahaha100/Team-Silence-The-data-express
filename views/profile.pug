@@ -1,6 +1,7 @@
 extends layout
 block content
     h1 #{username}
-    form(class="form" method='post' action="/submitted")
-        p
-            input(type='submit' value='Edit')
+    div(class="formDiv")
+        form(class="form" method='post' action="/submitted")
+            p
+                input(type='submit' value='Edit')
