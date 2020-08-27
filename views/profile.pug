@@ -1,7 +1,42 @@
 extends layout
 block content
-    h1 #{username}
     div(class="formDiv")
-        form(class="form" method='post' action="/submitted")
+        form(class="form" method='post' action="/profileFinishedEditting")
+            p Username:&nbsp;&nbsp;
+                input(type='text' name='username' required)
+            p Password:&nbsp;&nbsp;
+                input(type='text' name='password' required)
+            p E-Mail:&nbsp;&nbsp;
+                input(type='text' name='email' required)
+            p Age:&nbsp;&nbsp;
+                input(type='number' name='age' required)
+            p What shape is the earth to you?:<br>
+                input(type="radio" value="Cube" name="question1")
+                label(for="Cube") Cube
             p
-                input(type='submit' value='Edit')
+                input(type="radio" value="Sphere" name="question1")
+                label(for="Sphere") Sphere
+            p
+                input(type="radio" value="Capsule" name="question1")
+                label(for="capsule") Capsule
+
+            p How much is 1+1 to you?:<br>
+                input(type='radio' value="2" name='question2')
+                label(for="2") 2
+            p
+                input(type="radio" value="Fish" name="question2")
+                label(for="Fish") Fish
+            p
+                input(type="radio" value="at least 1" name="question2")
+                label(for="at least 1") at least 1
+            p How much wood CAN a wood chuck chuck?:<br>
+                input(type='radio' value="Many" name='question3')
+                label(for="Many") Many
+            p
+                input(type="radio" value="Lots" name="question3")
+                label(for="Lots") Lots
+            p
+                input(type="radio" value="Some" name="question3")
+                label(for="Some") Some
+            p
+                input(type='submit' value='Edit Profile!')

@@ -1,0 +1,17 @@
+extends layout
+block content
+        h1 Welcome to your Private Homepage #{secretUser}!
+        h2 Your information:
+        p Username: #{username}
+        p E-Mail: #{email}
+        p Age: #{age}
+        p Answer to What shape is the earth? #{question1}
+        p Answer to What is 1 + 1? #{question2}
+        p Answer to How much wood can a wood chuck chuck? #{question3} 
+        p #{lastTime}
+        form(class="form" method="post" action="/editProfile")
+            p
+                input(type="submit" value="Edit Profile")
+        form(class="form" method='post' action="/logout")
+            p
+                input(type='submit' value='Log Out')

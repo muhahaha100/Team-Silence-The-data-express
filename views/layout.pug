@@ -6,8 +6,13 @@ html
         header
             nav
                 ul
-                    li Stuff
+                    li
+                        a(href="/") Index
+                        if loggedIn
+                            a(href="/private") View Profile
+                        else
+                            a(href="/login") Log In
+                            a(href="/newUser") Create Account
         section
-            h1 #{title}
             block content
         footer
