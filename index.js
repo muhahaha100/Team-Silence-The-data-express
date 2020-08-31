@@ -11,9 +11,15 @@ const app = express();
 app.set("view engine", "pug");
 app.set("views", __dirname + "/views");
 
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 app.use(cookieParser("secret"));
 app.use(express.static(path.join(__dirname + "/public")));
+
 
 let urlencodedParser = bodyParser.urlencoded({
     extended: true
@@ -42,6 +48,7 @@ app.post("/login",urlencodedParser, routes.loginActually);
 app.post("/logout", urlencodedParser, routes.logout);
 app.get("/newUser", routes.newUser);
 app.post("/newUser", urlencodedParser, routes.newUserMade);
+app.get("/api", routes.api);
 //app.get("/newUser:id", routes.differentRoute);
 
 app.listen(3000);
