@@ -28,7 +28,7 @@ let userSchema = mongoose.Schema({
     question3: String
 });
 
-let User = mongoose.model("User_Collection", userSchema);
+let User = mongoose.model("user_collections", userSchema);
 
 /*
 exports.index = (req, res) => {
@@ -45,6 +45,86 @@ exports.index = (req, res) => {
 exports.newUser = (req, res) =>{
     res.render("form", {
         loggedIn: req.session.user
+    });
+};
+
+exports.api = (req, res) =>{
+    let questionAnswers = [
+        {
+            Cube: 0,
+            Sphere: 0,
+            Capsule: 0
+        },
+        {
+            Two: 0,
+            Fish: 0,
+            AtLeastOne: 0
+        },
+        {
+            Many: 0,
+            Lots: 0,
+            Some: 0
+        }
+    ]
+    User.find((err, user) => {
+        if (err) return console.error(err);
+
+        for (i=0; i < user.length; i++){
+            switch (user[i]["question1"]) {
+                case "Cube":
+                    questionAnswers[0]["Cube"] += 1;
+                    break;
+                case "Sphere":
+                    questionAnswers[0]["Sphere"] += 1;
+                    break;
+                case "Capsule":
+                    questionAnswers[0]["Capsule"] += 1;
+                    break;
+                default:
+                    break;
+            }
+
+            switch (user[i]["question2"]) {
+                case "2":
+                    questionAnswers[1]["Two"] += 1;
+                    break;
+                case "Fish":
+                    questionAnswers[1]["Fish"] += 1;
+                    break;
+                case "at least 1":
+                    questionAnswers[1]["AtLeastOne"] += 1;
+                    break;
+                default:
+                    break;
+            }
+
+            switch (user[i]["question3"]){
+                case "Many":
+                    questionAnswers[2]["Many"] += 1;
+                    break;
+                case "Lots":
+                    questionAnswers[2]["Lots"] += 1;
+                    break;
+                case "Some":
+                    questionAnswers[2]["Some"] += 1;
+                    break;
+                default:
+                    break;
+            }
+        }
+        let maxes = [0,0,0];
+
+        for (i=0; i < questionAnswers.length; i++){
+            for (var key in questionAnswers[i]){ // thanks https://stackoverflow.com/questions/684672/how-do-i-loop-through-or-enumerate-a-javascript-object
+                if (maxes[i] < questionAnswers[i][key]){
+                    maxes[i] = questionAnswers[i][key];
+                }
+            }
+        }
+        questionAnswers[3] = {maxes: maxes};
+        console.log(questionAnswers);
+        console.log(questionAnswers[3]["maxes"]);
+        res.json(questionAnswers);
     });
 };
 
@@ -73,11 +153,13 @@ exports.newUserMade = (req, res) => {
     user.save((err, user) => {
         if (err) return console.error(err);
         console.log(req.body.username + " Added");
+        /*
         req.session.user = {
             isAuthenticated: true,
             username: req.body.username
         };
-        res.redirect("/private");
+        */
+        res.redirect("/");
     });
 };
 
