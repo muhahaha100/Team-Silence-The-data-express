@@ -21,6 +21,10 @@ li{
     text-align: center;
 }
 
+.insideDiv{
+    display: inline;
+}
+
 .form{
     display: inline-block;
     width: 300px;

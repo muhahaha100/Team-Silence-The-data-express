@@ -1,15 +1,17 @@
 extends layout
 block content
-        p Welcome!
-        p Last time you visited the website: #{lastTime}
+    div(class="formDiv")
+        div(class="insideDiv")
+            p Welcome!
+            p Last time you visited the website: #{lastTime}
 
-        h1 What shape is the Earth?
-        canvas(id="canvas")
+            h1 What shape is the Earth?
+            canvas(id="canvas")
 
-        h1 How much is 1 + 1?
-        canvas(id="canvas2")
+            h1 How much is 1 + 1?
+            canvas(id="canvas2")
 
-        h1 How much wood can a wood chuck chuck?
-        canvas(id="canvas3")
-        
-        script(src="begin.js")
+            h1 How much wood can a wood chuck chuck?
+            canvas(id="canvas3")
+            
+            script(src="begin.js")
